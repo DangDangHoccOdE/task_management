@@ -4,11 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@EnableFeignClients
-public class TaskUserServiceApplication {
+public class TaskServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TaskUserServiceApplication.class, args);
+		SpringApplication.run(TaskServiceApplication.class, args);
 	}
 
 }
