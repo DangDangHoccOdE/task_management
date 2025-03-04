@@ -5,7 +5,7 @@ import com.example.model.User;
 import java.util.List;
 
 public interface UserService {
-    public User getUserProfiles(String jwt);
+    User getUserProfiles(String jwt);
 
     List<User> getAllUsers();
 }

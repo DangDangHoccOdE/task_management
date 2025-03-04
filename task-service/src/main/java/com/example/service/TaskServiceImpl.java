@@ -1,7 +1,9 @@
 package com.example.service;
 
+import com.example.mapper.TaskMapper;
 import com.example.model.Task;
 import com.example.model.TaskStatus;
+import com.example.model.dto.TaskDto;
 import com.example.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,14 +18,18 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
+    @Autowired
+    private TaskMapper taskMapper;
+
     @Override
-    public Task createTask(Task task, String requestRole) throws Exception {
+    public Task createTask(TaskDto taskDto, String requestRole) throws Exception {
         if(!requestRole.equals("ROLE_ADMIN")){
             throw new Exception("only admin can create task");
         }
 
+        taskDto.setCreatedTime(LocalDateTime.now());
+        Task task = taskMapper.toEntity(taskDto);
         task.setStatus(TaskStatus.PENDING);
-        task.setCreatedTime(LocalDateTime.now());
 
         return taskRepository.save(task);
     }
@@ -43,27 +49,28 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task updateTask(Task task, Long id, Long userId) throws Exception {
+    public Task updateTask(TaskDto taskDto, Long id, Long userId) throws Exception {
         Task existingTask = getTaskById(id);
-        if(task.getTitle() != null){
-            existingTask.setTitle(task.getTitle());
+        if(taskDto.getTitle() != null){
+            existingTask.setTitle(taskDto.getTitle());
         }
 
-        if(task.getDescription() != null){
-            existingTask.setDescription(task.getDescription());
+        if(taskDto.getDescription() != null){
+            existingTask.setDescription(taskDto.getDescription());
         }
 
-        if(task.getStatus() != null){
-            existingTask.setStatus(task.getStatus());
+        if(taskDto.getStatus() != null){
+            existingTask.setStatus(taskDto.getStatus());
         }
 
-        if(task.getImage() != null){
-            existingTask.setImage(task.getImage());
+        if(taskDto.getImage() != null){
+            existingTask.setImage(taskDto.getImage());
         }
 
-        if(task.getDeadline() != null){
-            existingTask.setDeadline(task.getDeadline());
+        if(taskDto.getDeadline() != null){
+            existingTask.setDeadline(taskDto.getDeadline());
         }
+
         return taskRepository.save(existingTask);
     }
 

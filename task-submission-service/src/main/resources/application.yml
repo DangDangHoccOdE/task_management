@@ -1,0 +1,28 @@
+server:
+  port: 5003
+
+spring:
+  application:
+    name: SUBMISSION-SERVICE
+  datasource:
+    username: 'postgres'
+    url: jdbc:postgresql://localhost:5435/task_submission_service
+    password: Dang972004@
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: 'true'
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka

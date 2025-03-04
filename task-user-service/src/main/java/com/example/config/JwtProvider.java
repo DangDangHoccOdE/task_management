@@ -33,7 +33,7 @@ public class JwtProvider {
 
     public static String getEmailFromToken(String token) {
         token = token.substring(7);
-        Claims claims = (Claims) Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJwt(token).getBody();
+        Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
 
         String email = String.valueOf(claims.get("email"));
         return email;
@@ -41,6 +41,7 @@ public class JwtProvider {
 
     private static String populateAuthorities(Collection<? extends GrantedAuthority> authorities) {
         Set<String> authoritiesSet = new HashSet<>();
+        System.out.println("Role: " + authorities);
         for (GrantedAuthority grantedAuthority : authorities) {
             authoritiesSet.add(grantedAuthority.getAuthority());
         }

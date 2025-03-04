@@ -1,0 +1,66 @@
+services:
+  task_user_service:
+    container_name: task_user_service
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Dang972004@
+      POSTGRES_DB: task_user_service
+    volumes:
+      - task_user_service:/data/task_user_service
+    ports:
+      - "5434:5432"
+    networks:
+      - microservices-net
+    restart: unless-stopped
+
+  task_service:
+      container_name: task_service
+      image: postgres
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: Dang972004@
+        POSTGRES_DB: task_service
+      volumes:
+        - task_service:/data/task_service
+      ports:
+        - "5433:5432"
+      networks:
+        - microservices-net
+      restart: unless-stopped
+
+  task_submission_service:
+    container_name: task_submission_service
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Dang972004@
+      POSTGRES_DB: task_submission_service
+    volumes:
+      - task_submission_service:/data/task_submission_service
+    ports:
+      - "5435:5432"
+    networks:
+      - microservices-net
+    restart: unless-stopped
+
+  pgadmin:
+      image: dpage/pgadmin4
+      container_name: pgadmin
+      restart: always
+      environment:
+        PGADMIN_DEFAULT_EMAIL: admin@admin.com
+        PGADMIN_DEFAULT_PASSWORD: admin
+      ports:
+        - "5050:80"
+      networks:
+        - microservices-net
+
+networks:
+  microservices-net:
+    driver: bridge
+
+volumes:
+  task_user_service:
+  task_service:
+  task_submission_service:
