@@ -1,5 +1,4 @@
 package com.example.model.dto;
-
 import com.example.model.TaskStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -29,7 +28,7 @@ public class TaskDto {
 
 //    private List<String> tags = new ArrayList<>();
 
-//    @NotNull(message = "Trạng thái không được để trống")
+    //    @NotNull(message = "Trạng thái không được để trống")
 //    @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
