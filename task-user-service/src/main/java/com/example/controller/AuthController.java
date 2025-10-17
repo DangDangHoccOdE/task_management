@@ -1,9 +1,7 @@
 package com.example.controller;
 
 import com.example.config.JwtProvider;
-import com.example.config.resquest.LoginRequest;
 import com.example.model.User;
-import com.example.model.dto.UserDto;
 import com.example.repository.UserRepository;
 import com.example.response.AuthResponse;
 import com.example.service.CustomUserServiceImplementation;
@@ -16,11 +14,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
 public class AuthController {
     @Autowired
     private UserRepository userRepository;
@@ -32,7 +31,7 @@ public class AuthController {
     private CustomUserServiceImplementation customUserServiceImplementation;
 
     @PostMapping("/signup")
-    public ResponseEntity<AuthResponse> createUser(@Validated @RequestBody UserDto user) throws Exception {
+    public ResponseEntity<AuthResponse> createUser(@RequestBody User user) throws Exception {
         String email = user.getEmail();
         String password = passwordEncoder.encode(user.getPassword());
         String fullName = user.getFullName();
@@ -64,9 +63,9 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) throws Exception {
-        String email = loginRequest.getEmail();
-        String password = loginRequest.getPassword();
+    public ResponseEntity<AuthResponse> login(@RequestBody User user) throws Exception {
+        String email = user.getEmail();
+        String password = user.getPassword();
 
         Authentication authentication = authentication(email,password);
         SecurityContextHolder.getContext().setAuthentication(authentication);

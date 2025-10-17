@@ -1,9 +1,0 @@
-.task-list-container{
-    width: 80%;
-}
-
-.task-list{
-    display: flex;
-    flex-direction: column;
-    gap: 15px
-}
